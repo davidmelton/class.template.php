@@ -2,52 +2,100 @@
 /**
  * Template Class
  */
+
 class Template {
+	
+	private $master;
+	private $child;
+	private $html;
+	private $path;
+	private $data = array();
+	private $type = '.php';
 
-	public $template;
-	public $html;
-	public $data = array();
-	public $master = '';
-	public $path = ''; // system path to templates directory
+    public function __construct($template, $path)
+    {
+		$this->path = $path;
+		$this->master = $this->path.$template.$this->type;
+    }
 
-	function setTemplate( $template )
+	
+	// defines an embedded template
+	public function child($template)
 	{
-		$this->template = $template;
+		$this->child = $this->path.$template.$this->type;
 	}
 
-	function setData( $placeholder, $value )
-	{
-		$this->data[$placeholder] = $value;
-	}
-
-	function make()
+	
+	// takes a template fragment and repeats it with a data result
+	public function repeater($template, $placeholder, array $result)
 	{
 		ob_start();
-		require($this->path.$this->master);
-		$this->html = ob_get_contents();
-		ob_end_clean();
+			require_once($this->path.$template.$this->type);
+		$template = ob_get_clean();
+		$repeater = '';
+		
+		foreach ($result as $row)
+		{
+			$html = $template;
+			foreach ($row as $key => $value)
+			{
+				$data = '<!--{'.$key.'}-->';
+				$html = str_replace($data, $value, $html);
+			}
+			$repeater .= $html;
+		}
+		$this->set($placeholder, $repeater);
+		unset($template, $html, $result);
+	}
 
-		if(!empty($this->template))
+	
+	// set the value of template placeholders
+	public function set($placeholder, $data)
+	{
+		if ( is_array( $data ))
+		{
+			foreach ($data as $key => $value)
+			{
+				$this->data[$key] = $value;
+			}
+		}
+		else
+		{
+			$this->data[$placeholder] = $data;
+		}
+	}
+
+	
+	// output the final html template
+	public function publish()
+	{
+		// include master template
+		ob_start();
+			require_once($this->master);
+		$this->html = ob_get_clean();
+
+		// include child template
+		if(!empty($this->child))
 		{
 			ob_start();
-			include($this->path.$this->template);
-			$content = ob_get_contents();
-			ob_end_clean();
+				require_once($this->child);
+			$content = ob_get_clean();
 			$this->html = str_replace('<!--{content}-->', $content, $this->html);
 		}
 
+		// replace template placeholders with data
 		foreach($this->data as $key => $value)
 		{
-			$template_name = '<!--{'.$key.'}-->';
-			$this->html = str_replace($template_name, $value, $this->html);
+			$data = '<!--{'.$key.'}-->';
+			$this->html = str_replace($data, $value, $this->html);
 		}
 
-		// Cleanup: Delete keys that were not used.
+		// delete unused placeholders
 		$this->html = preg_replace("/<!--\{[^-]+\}-->/", '', $this->html);
 
-		// Cleanup: Delete extra line breaks.
+		// remove extra line breaks
 		$this->html = preg_replace("/\n{2,}/", "\n", $this->html);
 
 		echo $this->html;
 	}
-};
+}
