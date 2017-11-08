@@ -20,7 +20,7 @@ To demonstrate how the class works, create a folder for your project using a fil
     └── ...
 ```
 
-### Create a global HTML template file.
+### Your Global Template
 
 
 First, create a basic HTML template called `master.php`. This file contains the markup for common elements that will appear on every page of your web site like a `<header>` and a `<footer>`.
@@ -54,7 +54,7 @@ First, create a basic HTML template called `master.php`. This file contains the 
 Notice the placeholders `<!--{title}-->`, `<!--{description}-->`, and `<!--{content}-->`. You will use these later to insert your own content into the page.
 
 
-### Create a home page that includes your master template.
+### Your Home Page
 
 
 Now you need to add some code to your `index.php` file to include the template class, the master template, and your own content.
@@ -63,9 +63,48 @@ Now you need to add some code to your `index.php` file to include the template c
 ```php
 <?php
 
-require 'classes/class.template.php';
+require_once 'classes/class.template.php';
 
-$template = new Template;
+$template = new Template('master', 'templates/');
 
-
+$template->publish();
 ```
+
+The [`require_once`](http://php.net/manual/en/function.require-once.php) function includes the `class.template.php` files from the `classes` folder. With the class now included, a new instance of the `Template` object is stored in the `$template` variable.
+
+`Template` accepts two arguments. First, the name of your global template file. In this case "master" refers to `master.php` which you created earlier. Second, the path to your templates directory. This will tell `Template` where to find all of your web page templates.
+
+Lastly, the `publish()` method of the `Template` object will output the contents of the `master.php` template to your browser. If you open `index.php` in your browser you should see the following HTML code from `master.php`.
+
+
+```html
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+		<title></title>
+		<meta name="description" content="">
+	</head>
+	<body>
+		<header>
+			<h1>Example Website</h1>
+		</header>
+		
+		<main>
+		
+		</main>
+		
+		<footer>
+			<p>Copyright Information</p>
+		</footer>
+	</body>
+</html>
+```
+
+
+> *Q:* Where did those template placeholders go?
+> *A:* The Template class removes any unused placeholders from the final output. Don't worry, once you define what goes into those placeholders they will reappear.
+
+
+### Using Placeholders
