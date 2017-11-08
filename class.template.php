@@ -30,7 +30,7 @@ class Template {
 	public function repeater($template, $placeholder, array $result)
 	{
 		ob_start();
-			require_once($this->path.$template.$this->type);
+		require_once($this->path.$template.$this->type);
 		$template = ob_get_clean();
 		$repeater = '';
 		
@@ -71,14 +71,14 @@ class Template {
 	{
 		// include master template
 		ob_start();
-			require_once($this->master);
+		require_once($this->master);
 		$this->html = ob_get_clean();
 
 		// include child template
 		if(!empty($this->child))
 		{
 			ob_start();
-				require_once($this->child);
+			require_once($this->child);
 			$content = ob_get_clean();
 			$this->html = str_replace('<!--{content}-->', $content, $this->html);
 		}
