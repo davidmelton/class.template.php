@@ -51,7 +51,7 @@ First, create a basic HTML template called `master.php`. This file contains the 
 </html>
 ```
 
-Notice the placeholders `<!--{title}-->`, `<!--{description}-->`, and `<!--{content}-->`. You will use these later to insert your own content into the page.
+Notice the placeholders `<!--{title}-->`, `<!--{description}-->`, and `<!--{content}-->`. You will use these later to insert your own content into your home page.
 
 
 ### Your Home Page
@@ -70,9 +70,9 @@ $template = new Template('master', 'templates/');
 $template->publish();
 ```
 
-The [`require_once`](http://php.net/manual/en/function.require-once.php) function includes the `class.template.php` files from the `classes` folder. With the class now included, a new instance of the `Template` object is stored in the `$template` variable.
+The [`require_once`](http://php.net/manual/en/function.require-once.php) function includes the `class.template.php` file from the `classes` folder. With the class now included, a new instance of the `Template` object is stored in the `$template` variable.
 
-`Template` accepts two arguments. First, the name of your global template file. In this case "master" refers to `master.php` which you created earlier. Second, the path to your templates directory. This will tell `Template` where to find all of your web page templates.
+`Template` accepts two arguments. The first argument is the name of your global template file. In this case "master" refers to `master.php` which you created earlier. The second argument is the path to your templates directory. This will tell `Template` where to find all of your web page templates.
 
 Lastly, the `publish()` method of the `Template` object will output the contents of the `master.php` template to your browser. If you open `index.php` in your browser you should see the following HTML code from `master.php`.
 
@@ -103,8 +103,26 @@ Lastly, the `publish()` method of the `Template` object will output the contents
 ```
 
 
-> *Q:* Where did those template placeholders go?
-> *A:* The Template class removes any unused placeholders from the final output. Don't worry, once you define what goes into those placeholders they will reappear.
+> **Q:** Where did those template placeholders go?
+
+> **A:** The Template class removes any unused placeholders from the final output. Don't worry, once you define what goes into those placeholders they will reappear.
 
 
 ### Using Placeholders
+
+
+Return to the `index.php` file and add a few new lines of code to add content into your template placeholders.
+
+
+```php
+<?php
+
+require_once 'classes/class.template.php';
+
+$template = new Template('master', 'templates/');
+
+$template->set('title', 'Example Website Title');
+$template->set('description', 'This is the description of the Example Website.');
+
+$template->publish();
+```
