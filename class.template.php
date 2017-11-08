@@ -1,6 +1,8 @@
 <?php
 /**
- * Template Class
+ * Title: PHP Template Class
+ * Author: David Melton
+ * Web: http://davidmelton.me
  */
 
 class Template {
