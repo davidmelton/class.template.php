@@ -160,7 +160,7 @@ $template = new Template('master', 'templates/');
 $content = <<<CONTENT
 	<h2>Blog Post Headline</h2>
 	<p><em>Posted 2 days ago.</em></p>
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
 	<p><a href="#">Read more</a></p>
 CONTENT;
 
@@ -170,3 +170,7 @@ $template->set('content', $content);
 
 $template->publish();
 ```
+
+## Child Templates
+
+This document is still in development. More coming soon.
