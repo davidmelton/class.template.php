@@ -14,11 +14,11 @@ class Template {
 	private $data = array();
 	private $type = '.php';
 
-    public function __construct($template, $path)
-    {
+	public function __construct($template, $path)
+	{
 		$this->path = $path;
 		$this->master = $this->path.$template.$this->type;
-    }
+	}
 
 	
 	// defines an embedded template

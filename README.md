@@ -1,5 +1,7 @@
 # PHP Template Class
-> A simple PHP class for managing web page templates.
+
+
+A simple PHP class for managing web page templates.
 
 
 ## Basic Usage
@@ -8,13 +10,13 @@
 To demonstrate how the class works, create a folder for your project using a file structure similar to the following:
 
     .
-    └── html							# Document root folder.
-		├── index.php					# Home page.
-	    ├── classes						# PHP classes folder.
-		│   └── class.template.php		# This template class.
-		├── templates					# HTML templates folder.
-		│   └── master.php				# A global HTML template.
-        └── ...
+    └── html				# Document root folder
+	├── index.php			# Home page
+	├── classes			# PHP classes folder
+	│   └── class.template.php	# This template class file
+	├── templates			# HTML templates folder
+	│   └── master.php		# A global HTML template
+	└── ...
 
 
 ### Create a global HTML template file.
@@ -34,7 +36,7 @@ First, create a basic HTML template called `master.php`. This file contains the 
 
 	<body>
 		<header>
-			<a href="#">Example Website</a>
+			<h1>Example Website</h1>
 		</header>
 		
 		<main>
@@ -48,4 +50,21 @@ First, create a basic HTML template called `master.php`. This file contains the 
 </html>
 ```
 
-Notice the commented placeholders `<!--{title}-->`, `<!--{description}-->`, and `<!--{content}-->`. We will insert content into those places later.
+Notice the placeholders `<!--{title}-->`, `<!--{description}-->`, and `<!--{content}-->`. You will use these later to insert your own content into the page.
+
+
+### Create a home page that includes your master template.
+
+
+Now you need to add some code to your `index.php` file to include the template class, the master template, and your own content.
+
+
+```php
+<?php
+
+require 'classes/class.template.php';
+
+$template = new Template;
+
+
+```
