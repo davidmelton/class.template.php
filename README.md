@@ -9,15 +9,16 @@ A simple PHP class for managing web page templates.
 
 To demonstrate how the class works, create a folder for your project using a file structure similar to the following:
 
-    .
-    └── html				# Document root folder
-	├── index.php			# Home page
-	├── classes			# PHP classes folder
-	│   └── class.template.php	# This template class file
-	├── templates			# HTML templates folder
-	│   └── master.php		# A global HTML template
-	└── ...
-
+```text
+.
+└── html				# Document root folder
+    ├── index.php			# Home page
+    ├── classes				# PHP classes folder
+    │   └── class.template.php		# This template class file
+    ├── templates			# HTML templates folder
+    │   └── master.php			# A global HTML template
+    └── ...
+```
 
 ### Create a global HTML template file.
 
