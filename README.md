@@ -37,7 +37,7 @@ First, create a basic HTML template called `master.php`. This file contains the 
 		</header>
 		
 		<main>
-		<!--{content}-->
+			<!--{content}-->
 		</main>
 		
 		<footer>
@@ -118,7 +118,7 @@ $template->publish();
 
 The `set()` method of `Template` accepts two arguments. The first argument is the name of the placeholder that you want to modify. The second argumant is the content that you want to put into the placeholder.
 
-If you open `index.php` again in your browser and view the source code of the page you should see the following HTML code:
+If you open `index.php` again in your browser and view the source code of the page, you should see the following HTML code with your content inserted into the placeholders:
 
 ```html
 
@@ -136,7 +136,7 @@ If you open `index.php` again in your browser and view the source code of the pa
 		</header>
 		
 		<main>
-		<p>Here is some page content.</p>
+			<p>Here is some page content.</p>
 		</main>
 		
 		<footer>
@@ -144,4 +144,29 @@ If you open `index.php` again in your browser and view the source code of the pa
 		</footer>
 	</body>
 </html>
+```
+
+### More Content
+
+Assigning content directly to placeholders like you just did is fine for small snippets of text or code. But often you'll need to add larger blocks of code to placeholders. One easy way is to use the [heredoc syntax](http://php.net/manual/en/language.types.string.php#language.types.string.syntax.heredoc).
+
+```php
+<?php
+
+require_once 'classes/class.template.php';
+
+$template = new Template('master', 'templates/');
+
+$content = <<<CONTENT
+	<h2>Blog Post Headline</h2>
+	<p><em>Posted 2 days ago.</em></p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+	<p><a href="#">Read more</a></p>
+CONTENT;
+
+$template->set('title', 'Example Website Title');
+$template->set('description', 'This is the description of the Example Website.');
+$template->set('content', $content);
+
+$template->publish();
 ```
