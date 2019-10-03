@@ -8,28 +8,30 @@
 class Template {
 	
 	private $master;
-	private $child;
 	private $html;
 	private $path;
+	private $children = array();
 	private $data = array();
-	private $type = '.php';
+	private $type = '.html';
 
-	public function __construct($template, $path)
+	public function __construct($template, $path = '')
 	{
 		$this->path = $path;
 		$this->master = $this->path.$template.$this->type;
 	}
 
 	
-	// defines an embedded template
-	public function child($template)
+	// set child templates
+	public function child($placeholder, $template)
 	{
-		$this->child = $this->path.$template.$this->type;
+		$this->children[$placeholder] = $this->path.$template.$this->type;
 	}
 
 	
-	// takes a template fragment and repeats it with a data result
-	public function repeater($template, $placeholder, array $result)
+	// takes a template fragment and repeats it
+	// with the result of a databse query or an
+	// associative array
+	public function repeater($placeholder, $template, array $result)
 	{
 		ob_start();
 		require_once($this->path.$template.$this->type);
@@ -52,9 +54,9 @@ class Template {
 
 	
 	// set the value of template placeholders
-	public function set($data, $placeholder = '')
+	public function set($placeholder, $data)
 	{
-		if (empty($placeholder) && is_array($data))
+		if (($placeholder === false) && is_array($data))
 		{
 			foreach ($data as $key => $value)
 			{
@@ -76,20 +78,22 @@ class Template {
 		require_once($this->master);
 		$this->html = ob_get_clean();
 
-		// include child template
-		if(!empty($this->child))
+		// include child templates
+		if(!empty($this->children))
 		{
-			ob_start();
-			require_once($this->child);
-			$content = ob_get_clean();
-			$this->html = str_replace('<!--{content}-->', $content, $this->html);
+			foreach($this->children as $placeholder => $template)
+			{
+				ob_start();
+				require_once($template);
+				$child = ob_get_clean();
+				$this->html = str_replace('<!--{'.$placeholder.'}-->', $child, $this->html);
+			}
 		}
 
 		// replace template placeholders with data
-		foreach($this->data as $key => $value)
+		foreach($this->data as $placeholder => $value)
 		{
-			$data = '<!--{'.$key.'}-->';
-			$this->html = str_replace($data, $value, $this->html);
+			$this->html = str_replace('<!--{'.$placeholder.'}-->', $value, $this->html);
 		}
 
 		// delete unused placeholders
