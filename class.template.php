@@ -95,8 +95,8 @@ class Template {
 		// delete unused placeholders
 		$this->html = preg_replace("/<!--\{[^-]+\}-->/", '', $this->html);
 
-		// remove extra line breaks
-		$this->html = preg_replace("/\n{2,}/", "\n", $this->html);
+		// remove extra white space
+		$this->html = preg_replace('/^\h*\v+/m', '', $this->html);
 
 		echo $this->html;
 	}
