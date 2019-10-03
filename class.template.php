@@ -52,9 +52,9 @@ class Template {
 
 	
 	// set the value of template placeholders
-	public function set($placeholder, $data)
+	public function set($data, $placeholder = '')
 	{
-		if ( is_array( $data ))
+		if (empty($placeholder) && is_array($data))
 		{
 			foreach ($data as $key => $value)
 			{
