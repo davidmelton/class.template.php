@@ -29,8 +29,8 @@ class Template {
 
 	
 	// takes a template fragment and repeats it
-	// with the result of a databse query or an
-	// associative array
+	// with the result of a databse query or a
+	// multidimensional array
 	public function repeater($placeholder, $template, array $result)
 	{
 		ob_start();
