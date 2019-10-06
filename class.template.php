@@ -7,101 +7,73 @@
 
 class Template {
 	
-	private $master;
-	private $html;
 	private $path;
-	private $children = array();
-	private $data = array();
-	private $type = '.html';
+	private $format;
+	private $template = array();
 
-	public function __construct($template, $path = '')
+
+	public function __construct($parent, $path = '', $format = '.html')
 	{
 		$this->path = $path;
-		$this->master = $this->path.$template.$this->type;
+		$this->format = $format;
+		$this->template['parent']['path'] = $this->path.$parent.$this->format;
 	}
 
-	
-	// set child templates
-	public function child($placeholder, $template)
-	{
-		$this->children[$placeholder] = $this->path.$template.$this->type;
-	}
 
-	
-	// takes a template fragment and repeats it
-	// with the result of a databse query or a
-	// multidimensional array
-	public function repeater($placeholder, $template, array $result)
+	private function set($name, $value)
 	{
-		ob_start();
-		require_once($this->path.$template.$this->type);
-		$template = ob_get_clean();
-		$repeater = '';
-		
-		foreach ($result as $row)
+		if (($name === false) && is_array($value))
 		{
-			$html = $template;
-			foreach ($row as $key => $value)
+			foreach ($value as $name => $value)
 			{
-				$data = '<!--{'.$key.'}-->';
-				$html = str_replace($data, $value, $html);
+				$data[$name] = $value;
 			}
-			$repeater .= $html;
+			return $data;
 		}
-		$this->set($placeholder, $repeater);
-		unset($template, $html, $result);
+
+		return $data[$name] = $value;
 	}
 
-	
-	// set the value of template placeholders
-	public function set($placeholder, $data)
+
+	public function setParent($name, $value)
 	{
-		if (($placeholder === false) && is_array($data))
-		{
-			foreach ($data as $key => $value)
-			{
-				$this->data[$key] = $value;
-			}
-		}
-		else
-		{
-			$this->data[$placeholder] = $data;
-		}
+		$this->template['parent']['data'] = $this->set($name, $value);
 	}
 
+
+	public function setChild($child, $name, $value)
+	{
+		$this->template['children'][$child]['data'] = $this->set($name, $value);
+	}
 	
-	// output the final html template
+
+	public function addChild($child, $placeholder)
+	{
+		$this->template['children'][$child]['path'] = $this->path.$child.$this->format;
+		$this->template['children'][$child]['placeholder'] = $placeholder;
+	}
+
+
 	public function publish()
 	{
-		// include master template
-		ob_start();
-		require_once($this->master);
-		$this->html = ob_get_clean();
-
-		// include child templates
-		if(!empty($this->children))
+		if (isset($this->template['children']))
 		{
-			foreach($this->children as $placeholder => $template)
+			foreach($this->template['children'] as $child)
 			{
 				ob_start();
-				require_once($template);
-				$child = ob_get_clean();
-				$this->html = str_replace('<!--{'.$placeholder.'}-->', $child, $this->html);
+				extract($child['data']);
+				require_once($child['path']);
+				$$child['placeholder'] = ob_get_clean();
 			}
 		}
+		
+		extract($this->template['parent']['data']);
+		require_once $this->template['parent']['path'];
+	}
 
-		// replace template placeholders with data
-		foreach($this->data as $placeholder => $value)
-		{
-			$this->html = str_replace('<!--{'.$placeholder.'}-->', $value, $this->html);
-		}
 
-		// delete unused placeholders
-		$this->html = preg_replace("/<!--\{[^-]+\}-->/", '', $this->html);
-
-		// remove extra white space
-		$this->html = preg_replace('/^\h*\v+/m', '', $this->html);
-
-		echo $this->html;
+	public function debug()
+	{
+		echo "<hr><pre>Template Variables\n".print_r($this->template, true).'</pre><hr>';
 	}
 }
