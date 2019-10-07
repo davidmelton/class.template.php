@@ -1,79 +1,71 @@
 <?php
 /**
  * Title: PHP Template Class
- * Author: David Melton
- * Web: http://davidmelton.me
+ * Documentation: https://github.com/davidmelton/php-template-class
  */
 
 class Template {
 	
-	private $path;
-	private $format;
-	private $template = array();
+	private $p;
+	private $f;
+	private $t;
 
-
-	public function __construct($parent, $path = '', $format = '.html')
+	public function __construct($t, $p=false, $f=false)
 	{
-		$this->path = $path;
-		$this->format = $format;
-		$this->template['parent']['path'] = $this->path.$parent.$this->format;
-	}
-
-
-	private function set($name, $value)
-	{
-		if (($name === false) && is_array($value))
+		if($p)
 		{
-			foreach ($value as $name => $value)
-			{
-				$data[$name] = $value;
-			}
-			return $data;
+			$this->p = $p;
 		}
-
-		return $data[$name] = $value;
-	}
-
-
-	public function setParent($name, $value)
-	{
-		$this->template['parent']['data'] = $this->set($name, $value);
-	}
-
-
-	public function setChild($child, $name, $value)
-	{
-		$this->template['children'][$child]['data'] = $this->set($name, $value);
-	}
-	
-
-	public function addChild($child, $placeholder)
-	{
-		$this->template['children'][$child]['path'] = $this->path.$child.$this->format;
-		$this->template['children'][$child]['placeholder'] = $placeholder;
-	}
-
-
-	public function publish()
-	{
-		if (isset($this->template['children']))
+		if(!$f)
 		{
-			foreach($this->template['children'] as $child)
+			$this->f = '.html';
+		}
+		$this->t['parent']['path'] = $this->p.$t.$this->f;
+	}
+
+	public function set($t, $v, $c=false)
+	{
+		if ($c)
+		{
+			$this->t['children'][$c]['data'][$t] = $v;
+		}
+		else
+		{
+			$this->t['parent']['data'][$t] = $v;
+		}
+	}
+
+	public function child($c, $t)
+	{
+		$this->t['children'][$c]['path'] = $this->p.$c.$this->f;
+		$this->t['children'][$c]['tag'] = $t;
+	}
+
+	public function push($e=true)
+	{
+		if (isset($this->t['children']))
+		{
+			foreach($this->t['children'] as $c)
 			{
 				ob_start();
-				extract($child['data']);
-				require_once($child['path']);
-				$$child['placeholder'] = ob_get_clean();
+
+				if (isset($c['data']))
+				{
+					extract($c['data']);
+				}
+				require_once($c['path']);
+
+				$$c['tag'] = ob_get_clean();
 			}
 		}
 		
-		extract($this->template['parent']['data']);
-		require_once $this->template['parent']['path'];
-	}
+		extract($this->t['parent']['data']);
+		
+		require_once $this->t['parent']['path'];
 
-
-	public function debug()
-	{
-		echo "<hr><pre>Template Variables\n".print_r($this->template, true).'</pre><hr>';
+		if ($e)
+		{
+			exit;
+		}
 	}
 }
