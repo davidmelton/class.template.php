@@ -23,7 +23,7 @@ Recently refactored the whole class, this documentation is work in progress.
 #### Return Values
 
 #### Examples
-
+---
 
 ### template::set
 
@@ -38,7 +38,7 @@ Recently refactored the whole class, this documentation is work in progress.
 #### Return Values
 
 #### Examples
-
+---
 
 ### template::child
 
@@ -53,7 +53,7 @@ Recently refactored the whole class, this documentation is work in progress.
 #### Return Values
 
 #### Examples
-
+---
 
 ### template::push
 
