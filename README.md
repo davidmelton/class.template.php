@@ -6,66 +6,65 @@ A simple PHP class for managing HTML page templates.
 
 Recently refactored the whole class, this documentation is work in progress.
 
----
 
-### Methods
+## Methods
 
 
-#### template::__construct
+### template::__construct
 
-##### Desctiption
+#### Desctiption
 
     template::__construct ( string $parent [, string $path = FALSE ] [, string $format = FALSE ] ) : null
 
 
 
-##### Parameters
+#### Parameters
 
-##### Return Values
+#### Return Values
 
-##### Examples
+#### Examples
 
 
-#### template::set
+### template::set
 
-##### Desctiption
+#### Desctiption
 
     template::set ( string $tag, string $value [, string $child = FALSE ] ) : null
 
 
 
-##### Parameters
+#### Parameters
 
-##### Return Values
+#### Return Values
 
-##### Examples
+#### Examples
 
 
-#### template::child
+### template::child
 
-##### Desctiption
+#### Desctiption
 
     template::child ( string $child, string $tag ) : null
 
 
 
-##### Parameters
+#### Parameters
 
-##### Return Values
+#### Return Values
 
-##### Examples
+#### Examples
 
 
-#### template::push
+### template::push
 
-##### Desctiption
+#### Desctiption
 
     template::push ( bool $exit = TRUE ) : string
 
 
 
-##### Parameters
+#### Parameters
 
-##### Return Values
+#### Return Values
 
-##### Examples
+#### Examples
