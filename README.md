@@ -12,7 +12,7 @@ Recently refactored the whole class, this documentation is work in progress.
 
 ### template::__construct
 
-#### Desctiption
+#### Description
 
     template::__construct ( string $parent [, string $path = FALSE ] [, string $format = FALSE ] ) : null
 
@@ -27,7 +27,7 @@ Recently refactored the whole class, this documentation is work in progress.
 
 ### template::set
 
-#### Desctiption
+#### Description
 
     template::set ( string $tag, string $value [, string $child = FALSE ] ) : null
 
@@ -42,7 +42,7 @@ Recently refactored the whole class, this documentation is work in progress.
 
 ### template::child
 
-#### Desctiption
+#### Description
 
     template::child ( string $child, string $tag ) : null
 
@@ -57,7 +57,7 @@ Recently refactored the whole class, this documentation is work in progress.
 
 ### template::push
 
-#### Desctiption
+#### Description
 
     template::push ( bool $exit = TRUE ) : string
 
