@@ -1,14 +1,15 @@
 # PHP Template Class
 
-A simple PHP class for managing HTML page templates.
+A simple PHP class for managing HTML templates.
 
 
 ## Basic Usage
 
-Recently refactored the whole class, this documentation is work in progress.
+Recently refactored the whole class, this documentation is a work in progress.
 
 
 ## Methods
+
 
 ### template::__construct
 
@@ -16,7 +17,8 @@ Recently refactored the whole class, this documentation is work in progress.
 
     template::__construct ( string $parent [, string $path = FALSE ] [, string $format = FALSE ] ) : null
 
-When a new instance of the **Template()** class is created, the constructor method defines the parent template, the path to the templates directory, and the template's file type.
+When a new instance of the **Template()** class is created, the constructor method defines the parent template, the path to the directory where the templates are located, and the file type of the templates.
+
 
 #### Parameters
 
@@ -30,7 +32,8 @@ When a new instance of the **Template()** class is created, the constructor meth
 
 3. **format** *optional*
 
-   The file extension of the template files. This default value of this parameter is `.html`.
+   The file extension of the template files. The default value of this parameter is `.html`.
+
 
 #### Examples
 ```php
@@ -49,13 +52,15 @@ $template = new Template('master', '../templates/', '.tpl');
 ```
 ---
 
+
 ### template::child
 
 #### Description
 
     template::child ( string $child, string $tag ) : null
 
-The **child()** method defines the child template's filename and the name of its placeholder tag in the parent template. The path to the child template and the child template's file type are inherited from the template constructor method.
+The **child()** method defines a child template's filename and the name of its placeholder tag in the parent template. The path to the child template and the child template's file type are inherited from the Template constructor method.
+
 
 #### Parameters
 
@@ -67,6 +72,7 @@ The **child()** method defines the child template's filename and the name of its
 
    The name of the child template's placeholder tag in the parent template.
 
+
 #### Examples
 ```php
 
@@ -76,13 +82,15 @@ $template->child('login', 'login_form');
 ```
 ---
 
+
 ### template::set
 
 #### Description
 
     template::set ( string $tag, string $value [, string $child = FALSE ] ) : null
 
-The **set()** method assigns a value to a template placeholder tag in the parent template or a child template.
+The **set()** method assigns a value to a template placeholder tag in the parent template or in a child template.
+
 
 #### Parameters
 
@@ -96,7 +104,8 @@ The **set()** method assigns a value to a template placeholder tag in the parent
 
 3. **child** *optional*
 
-   The name of the child template that contains the template placeholder tag. If not defined, **set()** method assumes the placeholder tag is located in the parent template. 
+   The name of the child template that contains the template placeholder tag. If not defined, the **set()** method assumes the placeholder tag is located in the parent template. 
+
 
 #### Examples
 ```php
@@ -108,6 +117,7 @@ $template->set('This is a paragraph in a child template.', 'copyright', 'footer'
 ```
 ---
 
+
 ### template::push
 
 #### Description
@@ -116,15 +126,18 @@ $template->set('This is a paragraph in a child template.', 'copyright', 'footer'
 
 The **push()** method compiles all the template files and placeholder tag values, then publishes the template as a string of HTML. This method will also terminate the PHP script by default unless the **exit** parameter is set to `false`.
 
+
 #### Parameters
 
 1. **exit** *optional*
 
    When called, the **push()** method will terminate the current PHP script unless the **exit** parameter is set to `false`.
 
+
 #### Return Values
 
-The **push()** method does not actually `return;` a value, it outputs a string of HTML directly to the PHP script in which it is called.
+The **push()** method does not actually `return;` a value. Instead, it outputs a string of HTML directly to the PHP script in which it was called.
+
 
 #### Examples
 ```php
