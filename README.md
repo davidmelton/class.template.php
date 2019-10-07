@@ -18,15 +18,15 @@ Recently refactored the whole class, this documentation is work in progress.
 
 #### Parameters
 
-1. **parent
+1. **parent**
 
    The filename of the parent (master) template without a file extension.
 
-2. **path
+2. **path**
 
    The absolute path to the directory containing template files.
 
-3. **format
+3. **format**
 
    The file extension of the template files. This default value of this parameter is `.html`.
 
