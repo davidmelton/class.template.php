@@ -110,9 +110,9 @@ The **set()** method assigns a value to a template placeholder tag in the parent
 #### Examples
 ```php
 
-$template->set('This is a headline in the parent template.', 'h1_tag');
+$template->set('h1_tag', 'This is a headline in the parent template.');
 
-$template->set('This is a paragraph in a child template.', 'copyright', 'footer');
+$template->set('intro', 'This is a paragraph in a child template.', 'about-us');
 
 ```
 ---
