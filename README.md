@@ -18,18 +18,20 @@ Recently refactored the whole class, this documentation is work in progress.
 
 #### Parameters
 
-**parent**
-: The filename of the parent (master) template without a file extension.
+- parent
+  The filename of the parent (master) template without a file extension.
 
-**path**
-: The absolute path to the directory containing template files.
+- path
+  The absolute path to the directory containing template files.
 
-**format**
-: The file extension of the template files. This default value of this parameter is `.html`.
+- format
+  The file extension of the template files. This default value of this parameter is `.html`.
 
 #### Examples
 ```php
+
 $template = new Template('master', '../templates/', '.tpl');
+
 ```
 ---
 
