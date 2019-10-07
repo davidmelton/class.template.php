@@ -33,6 +33,15 @@ Recently refactored the whole class, this documentation is work in progress.
 #### Examples
 ```php
 
+// set the parent template to "master.html"
+$template = new Template('master');
+
+// set the parent template
+// to "../templates/master.html"
+$template = new Template('master', '../templates/');
+
+// set the parent template
+// to "../templates/master.tpl"
 $template = new Template('master', '../templates/', '.tpl');
 
 ```
