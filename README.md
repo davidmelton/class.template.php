@@ -18,14 +18,17 @@ Recently refactored the whole class, this documentation is work in progress.
 
 #### Parameters
 
-- parent
-  The filename of the parent (master) template without a file extension.
+1. parent
 
-- path
-  The absolute path to the directory containing template files.
+   The filename of the parent (master) template without a file extension.
 
-- format
-  The file extension of the template files. This default value of this parameter is `.html`.
+2. path
+
+   The absolute path to the directory containing template files.
+
+3. format
+
+   The file extension of the template files. This default value of this parameter is `.html`.
 
 #### Examples
 ```php
