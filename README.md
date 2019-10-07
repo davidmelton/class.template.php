@@ -2,6 +2,7 @@
 
 A simple PHP class for managing HTML page templates.
 
+
 ## Basic Usage
 
 Recently refactored the whole class, this documentation is work in progress.
@@ -9,18 +10,13 @@ Recently refactored the whole class, this documentation is work in progress.
 
 ## Methods
 
-
 ### template::__construct
 
 #### Description
 
     template::__construct ( string $parent [, string $path = FALSE ] [, string $format = FALSE ] ) : null
 
-
-
 #### Parameters
-
-#### Return Values
 
 #### Examples
 ---
@@ -31,11 +27,7 @@ Recently refactored the whole class, this documentation is work in progress.
 
     template::set ( string $tag, string $value [, string $child = FALSE ] ) : null
 
-
-
 #### Parameters
-
-#### Return Values
 
 #### Examples
 ---
@@ -46,11 +38,7 @@ Recently refactored the whole class, this documentation is work in progress.
 
     template::child ( string $child, string $tag ) : null
 
-
-
 #### Parameters
-
-#### Return Values
 
 #### Examples
 ---
@@ -60,8 +48,6 @@ Recently refactored the whole class, this documentation is work in progress.
 #### Description
 
     template::push ( bool $exit = TRUE ) : string
-
-
 
 #### Parameters
 
